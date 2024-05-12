@@ -1,80 +1,126 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>嚕咪毛！飲料訂購表</title>
-    <script src="https://d.line-scdn.net/liff/1.0/sdk.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-<script>
-	function initializeApp(data) {  //初始化LIFF
-		var userid = data.context.userId;  //取得ID
-	}
-
-	function pushMsg(pname, pdatatime, proom) {
-		if (pname == '' || pdatatime == '' || proom == '') {  //資料檢查
-			alert('每個項目都必須輸入！');
-			return;
-		}
-		var msg = "###";  //回傳訊息字串
-		msg = msg + pname + "/";
-		msg = msg + amount + "/";
-		msg = msg + pdatatime + "/";
-		msg = msg + proom;
-		liff.sendMessages([  //推播訊息
-			{ type: 'text',
-			  text: msg
-			}
-		])
-			.then(() => {
-				liff.closeWindow();  //關閉視窗
-			});
-	}
-
-	$(document).ready(function () {
-		liff.init(function (data) {  //初始化LIFF
-			initializeApp(data);
-		});
-		
-		$('#sure').click(function (e) {  //按下確定鈕
-			pushMsg($('#name').val(), $('#datetime').val(), $('#sel_room').val());
-		});
-	});
-</script>
+	<meta name="viewport" content="width-device-width, initial-scale=1" />
+	<meta charset="utf-8">
+	<title>訂票</title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 </head>
-<body>
-    <div class="row" style="margin: 10px">
-        <div class="col-12" style="margin: 10px">
-            <label>姓名</label>
-            <input type="text" id="name" class="form-control" />
-            <br />
-            <label>日期</label>
-            <input type="date" id="datetime" value="" class="form-control" />
-            <br />
-            <label>飲料數量</label>
-            <input type="number" id="txb_amount" class="form-control" />
-            <br />
-            <label>品項</label>
-            <select id="sel_drink" class="form-control">
-                <option selected>茉莉綠茶</option>
-                <option>珍珠紅茶</option>
-                <option>紅茶拿鐵</option>
-                <option>四季春茶</option>
-                <option>冬瓜檸檬</option>
-            </select>
-            <br />
-            <label>加料</label>
-            <select id="sel_drink" class="form-control">
-                <option selected>無</option>
-                <option>白玉珍珠</option>
-                <option>椰果</option>
-                <option>仙草</option>
-                <option>小芋園</option>
-            </select>
-            <br />
-            <button class="btn btn-warning btn-block" id="sure">確定</button>
+<body style="background-color: #D3C4E3">
+    <div class="row" style="margin:10px">
+        <div class="container" style="margin-top:10%">
+            <div class="col-12" >
+                <div style="display: flex; flex-direction: column;align-items: flex-start;font-size:1rem;margin-bottom: 10%;">
+                    <label style="width: 20% ;font-weight: bolder;margin-bottom: 0px;color: black;">電影</label>
+                    <select id="sel_type" class-="form-control" style="margin-top: 10px;width: 100%;height: calc(2.25rem + 2px);border-radius:15px;padding: 0.375rem 1.75rem 0.375rem 0.75rem;border: 1px solid #ced4da;">
+                    <option selected value="0">---</option>
+                    <option value="1">小獅子王</option>
+                    <option value="2">刀鋒劍客</option>
+                    <option value="3">樂透大作戰</option>
+                    <option value="4">心裏美</option>
+                    <option value="5">拆彈倒數30分鐘</option>
+                    </select>
+                </div>
+    				
+                <div style="display: flex; flex-direction: column;align-items: flex-start;margin-bottom: 10%;">
+                    <p style="font-weight: bolder;margin-bottom: 0px;color: black;">票價(線上只能購買成人票)</p>
+                    <p id="exhmoney" style="font-weight: bolder;color: white ;margin-bottom: 0px;">$300</p>
+                </div>		
+
+                <div style="display: flex; flex-direction: column;align-items: flex-start;font-size:1rem;margin-bottom: 10px;">
+                    <label style="width: 20%;font-weight: bolder;margin-bottom: 0px;color: black;">票數</label>
+                    <select class="custom-select" id="sel_amount" style="border-radius:15px;margin-top: 10px;">
+                        <option selected>---</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                    </select>
+                </div>
+    						
+                <div style="flex-direction: row;display: flex;align-items: center;justify-content: center;height:65px;margin-top: 15%;">
+                    <button  class="btr" id="btn_reserve" style="width: 100%;height: 100%;color:black;font-weight: bolder;background-color: #FFF275;border-radius:27px;border-color:#D4EBE9">
+                    購買
+                    </button>
+                </div>
+            </div>
         </div>
-    </div>
+    	</div>
+    <script src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"></script>
+	<script>
+        var liffID = '1657103560-L9092REa';
+
+            liff.init({
+              liffId: liffID
+            }).then(() => {
+            　var isInClient = liff.isInClient();
+            　console.log('isInClient', isInClient);
+            　$('#isInClient').val(isInClient);
+            }).catch((err) => {
+            　console.log('初始化失敗')
+            });
+
+        var exhprice=['請選擇電影','$280','$280','$270','$300','$280'];
+        
+
+            
+		function reserve(type, amount) {
+
+			if(type == '0' || amount == '---'){  //資料檢查
+				alert("每個項目都必須輸入!!");
+				return;
+			}
+
+			var msg = "###";//回傳訊息字串
+			msg = msg + type + "/" ;
+			msg = msg + amount + "/";
+
+            
+			
+			liff.sendMessages([//推送訊息
+				{ 	
+					type: 'text',
+					text: msg
+				}
+			])
+			
+    			.then(function () {
+                    window.alert("訂票成功！");
+                    liff.closeWindow();
+                }).catch(function (error) {
+                    window.alert("Error sending message: " + error);
+                });
+		}
+
+        //價錢轉換start
+
+        $( '#sel_type' ).change(function () {
+            var money = "";
+            $( '#sel_type option:selected').each(function() {
+              money += exhprice[$("#sel_type option:selected").val()];
+            });
+            $( '#exhmoney' ).text( money );
+          })
+          .change();
+
+        //價錢轉換end
+
+		$(document).ready(function (){
+        			initializeLiff(1657103560-L9092REa);
+			});
+         $('#btn_reserve').click(function() { //按下確定送出
+            reserve($('#sel_type option:selected').text(), $('#sel_amount').val());
+		});
+
+
+
+	</script>
+
+
+
 </body>
 </html>
