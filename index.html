@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset='utf-8' />
-
+<meta name="viewport" content="width-device-width, initial-scale=1" charset='utf-8'/>
 <link href='/docs/dist/demo-to-codepen.css' rel='stylesheet' />
 
   <style>
@@ -18,7 +17,20 @@
       max-width: 1100px;
       margin: 40px auto;
     }
-    
+    .button-container button {
+    margin: 5px;
+    padding: 20px 40px;
+    background-color: #f8f9fa;
+    border: 1px solid #ccc;
+    cursor: pointer;
+  }
+  
+  .round-button {
+    padding: 15px 30px;
+    border-radius: 50%;
+    font-size: 16px; /* Larger font size */
+    background-color: #4CAF50; /* Different color */
+  }
   </style>
 
   <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js'></script>
@@ -70,6 +82,14 @@
 
   <div id='calendar'></div>
   <div id='details' style='margin: 20px auto; max-width: 1100px; padding: 20px; background-color: lightgray;'></div>
+  <div class="button-container" style="text-align: center; padding: 20px;">
+    <button>查詢</button>
+    <button>助手</button>
+    <button class="round-button">新增記帳</button>
+    <button>顯示報表</button>
+    <button>統計</button>
+  </div>
+  
 </body>
 
 </html>
